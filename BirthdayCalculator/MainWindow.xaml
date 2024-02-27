@@ -7,17 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            
-        </Grid.ColumnDefinitions>
-        <TextBlock Text="Select your date oj birth:" Grid.Row="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
-        <TextBox Name="TbDateOfBirth" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 0"></TextBox>
-        <Button Name="BCalculate" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5" Content="Calculate" Click="BCalculate_Click"></Button>
+        <local:CaculateControl></local:CaculateControl>
     </Grid>
 </Window>

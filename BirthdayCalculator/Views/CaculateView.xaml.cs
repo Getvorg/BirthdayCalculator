@@ -19,11 +19,11 @@ namespace BirthdayCalculator.Views
 
     public partial class CaculateView : UserControl
     {
-        private CaculateView _viewModel;
+        private CalculateViewModel _viewModel;
         public CaculateView()
         {
             InitializeComponent();
-            DataContext = _viewModel = new CaculateView();
+            DataContext = _viewModel = new CalculateViewModel();
         }
 
         private void BCalculate_Click(object sender, RoutedEventArgs e)

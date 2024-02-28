@@ -105,11 +105,10 @@ namespace BirthdayCalculator.ViewModels
 
         private string CalculateChineseZodiacSign(DateTime birthDate)
         {
-            string[] chineseZodiacSigns = new string[]{"Мавпа", "Півень", "Собака", "Свиня", "Щур", "Бик", "Тигр", "Кролик", "Дракон", "Змія", "Кінь", "Коза"};
+            string[] chineseZodiacSigns = new string[]{"Щур", "Бик", "Тигр", "Кролик", "Дракон", "Змія", "Кінь", "Коза", "Мавпа", "Півень", "Собака", "Свиня"};
 
-            int startYear = 1900; // Початковий рік циклу китайських знаків зодіаку
             int year = birthDate.Year;
-            int index = (year - startYear) % 12;
+            int index = (year + 8) % 12;
 
             return "Китайський знак зодіаку: " + chineseZodiacSigns[index];
         }

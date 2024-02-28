@@ -26,9 +26,5 @@ namespace BirthdayCalculator.Views
             DataContext = _viewModel = new CalculateViewModel();
         }
 
-        private void BCalculate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace BirthdayCalculator.Models
             set { _age = value; }
         }
 
-        public string ZodiacSing
+        public string ZodiacSign
         {
             get { return _zodiacSign; }
             set { _zodiacSign = value; }

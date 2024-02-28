@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <ContentControl>
-            <views:CaculateView></views:CaculateView>
+            <views:CalculateView></views:CalculateView>
         </ContentControl>
     </Grid>
 </Window>

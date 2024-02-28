@@ -17,10 +17,10 @@ using System.Windows.Shapes;
 namespace BirthdayCalculator.Views
 {
 
-    public partial class CaculateView : UserControl
+    public partial class CalculateView : UserControl
     {
         private CalculateViewModel _viewModel;
-        public CaculateView()
+        public CalculateView()
         {
             InitializeComponent();
             DataContext = _viewModel = new CalculateViewModel();

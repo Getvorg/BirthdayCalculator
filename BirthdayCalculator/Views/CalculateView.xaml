@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BirthdayCalculator"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -14,16 +14,43 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
         <TextBlock Text="Select your date of birth:" Grid.Row="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
+        <TextBlock Text="FirstName" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
+        <TextBlock Text="LastName" Grid.Row="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
+        <TextBlock Text="Email" Grid.Row="6"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></TextBlock>
+
+        <TextBox Name="TBFirstName" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5,0,5,5" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Name="TBLastName" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5,0,5,5" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Name="TBEmail" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5,0,5,5" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
         <DatePicker Grid.Row="1" SelectedDate="{Binding BirthDate}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"></DatePicker>
-        <Button Name="BCalculate" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5" Content="Calculate" Command="{Binding CalculateCommand}"></Button>
-        <TextBlock Name="TbAge" Text="{Binding Age}" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
-        <TextBlock Name="TbZodiacSign" Text="{Binding ZodiacSign}" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
-        <TextBlock Name="TbChineseZodiacSign" Text="{Binding ChineseZodiacSign}" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+
+        <Button Name="BCalculate" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5" Content="Proceed" Command="{Binding CalculateCommand}"></Button>
+
+        <TextBlock Name="TbAge" Text="{Binding Age}" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbZodiacSign" Text="{Binding ZodiacSign}" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbChineseZodiacSign" Text="{Binding ChineseZodiacSign}" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbFirstName" Text="{Binding FirstName}" Grid.Row="12" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbLastName" Text="{Binding LastName}" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbEmail" Text="{Binding Email}" Grid.Row="14" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbIsAdult" Text="{Binding IsAdultString}" Grid.Row="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+        <TextBlock Name="TbIsBirthday" Text="{Binding IsBirthdayString}" Grid.Row="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Margin="5, 0, 5, 5"></TextBlock>
+
     </Grid>
 </UserControl>

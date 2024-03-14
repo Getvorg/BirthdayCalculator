@@ -14,7 +14,7 @@ namespace BirthdayCalculator.ViewModels
 {
     class CalculateViewModel : INotifyPropertyChanged
     {
-        private User _user = new User();
+        private Person _user = new Person();
 
         private CalculateCommand<object> _calculateCommand;
 
@@ -44,15 +44,43 @@ namespace BirthdayCalculator.ViewModels
             set { _user.ChineseZodiacSign = value; }
         }
 
+        public string FirstName
+        {
+            get { return _user.FirstName; }
+            set { _user.FirstName = value; }
+        }
+
+        public string LastName
+        {
+            get { return _user.LastName; }
+            set { _user.LastName = value; }
+        }
+
+        public string Email
+        {
+            get { return _user.Email; }
+            set { _user.Email = value; }
+        }
+
+        public bool IsAdult
+        {
+            get { return Age >= 18; }
+        }
+
+        public bool IsBirthday
+        {
+            get { return _user.IsBirthday; }
+        }
+
         public CalculateCommand<object> CalculateCommand
         {
             get
             {
-                return _calculateCommand ??= new CalculateCommand<object>(_ => Calculate(), CanExecute);
+                return _calculateCommand ??= new CalculateCommand<object>(_ => Proceed(), CanExecute);
             }
         }
 
-        private void Calculate()
+        private void Proceed()
         {
             Age = CalculateAge(BirthDate);
             OnPropertyChanged(nameof(Age));
@@ -63,20 +91,22 @@ namespace BirthdayCalculator.ViewModels
                 return;
             }
 
-            if (BirthDate.Month == DateTime.Today.Month && BirthDate.Day == DateTime.Today.Day)
-            {
-                MessageBox.Show("З Днем Народження!");
-            }       
-
             ZodiacSign = CalculateZodiacSign(BirthDate);
             OnPropertyChanged(nameof(ZodiacSign));
 
             ChineseZodiacSign = CalculateChineseZodiacSign(BirthDate);
             OnPropertyChanged(nameof(ChineseZodiacSign));
 
+            OnPropertyChanged(nameof(FirstName));
+            OnPropertyChanged(nameof(LastName));
+            OnPropertyChanged(nameof(Email));
+
+
+            CalculateIsAdult(Age);
+            CalculateIsBirthday(BirthDate);
         }
 
-        private int CalculateAge(DateTime birthDate)
+        public int CalculateAge(DateTime birthDate)
         {
             DateTime today = DateTime.Today;
             int age = today.Year - birthDate.Year;
@@ -84,7 +114,7 @@ namespace BirthdayCalculator.ViewModels
             return age;
         }
 
-        private string CalculateZodiacSign(DateTime birthDate)
+        public string CalculateZodiacSign(DateTime birthDate)
         {
             int day = birthDate.Day;
             int month = birthDate.Month;
@@ -103,7 +133,7 @@ namespace BirthdayCalculator.ViewModels
             }
         }
 
-        private string CalculateChineseZodiacSign(DateTime birthDate)
+        public string CalculateChineseZodiacSign(DateTime birthDate)
         {
             string[] chineseZodiacSigns = new string[]{"Щур", "Бик", "Тигр", "Кролик", "Дракон", "Змія", "Кінь", "Коза", "Мавпа", "Півень", "Собака", "Свиня"};
 
@@ -111,6 +141,35 @@ namespace BirthdayCalculator.ViewModels
             int index = (year + 8) % 12;
 
             return "Китайський знак зодіаку: " + chineseZodiacSigns[index];
+        }
+
+        private bool CalculateIsAdult(int age)
+        {
+            if(age >= 18)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CalculateIsBirthday(DateTime birthDate)
+        {
+            if(birthDate.Month == DateTime.Today.Month && birthDate.Day == DateTime.Today.Day)
+            {
+                MessageBox.Show("З Днем Народження!");
+                return true;
+            }
+            return false;
+        }
+
+        public string IsAdultString
+        {
+            get { return IsAdult ? "Менше 18" : "Повнолітній"; }
+        }
+
+        public string IsBirthdayString
+        {
+            get { return IsBirthday ? "Сьогодні ваш день народження!" : "Сьогодні не ваш день народження."; }
         }
 
         private bool CanExecute(object obj)
@@ -121,6 +180,11 @@ namespace BirthdayCalculator.ViewModels
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyName == nameof(IsAdult) || propertyName == nameof(IsBirthday))
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAdultString)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBirthdayString)));
+            }
         }
     }
 }

@@ -64,12 +64,23 @@ namespace BirthdayCalculator.ViewModels
 
         public bool IsAdult
         {
-            get { return Age >= 18; }
+            get { return _user.IsAdult; }
+            set { _user.IsAdult = value; }
         }
-
         public bool IsBirthday
         {
             get { return _user.IsBirthday; }
+            set { _user.IsBirthday = value; }
+        }
+
+        public string IsAdultString
+        {
+            get { return IsAdult ? "Менше 18" : "Повнолітній"; }
+        }
+
+        public string IsBirthdayString
+        {
+            get { return IsBirthday ? "Сьогодні ваш день народження!" : "Сьогодні не ваш день народження("; }
         }
 
         public CalculateCommand<object> CalculateCommand
@@ -101,9 +112,11 @@ namespace BirthdayCalculator.ViewModels
             OnPropertyChanged(nameof(LastName));
             OnPropertyChanged(nameof(Email));
 
+            IsAdult = CalculateIsAdult(Age);
+            OnPropertyChanged(nameof(IsAdultString));
 
-            CalculateIsAdult(Age);
-            CalculateIsBirthday(BirthDate);
+            IsBirthday = CalculateIsBirthday(BirthDate);
+            OnPropertyChanged(nameof(IsBirthdayString));
         }
 
         public int CalculateAge(DateTime birthDate)
@@ -143,16 +156,16 @@ namespace BirthdayCalculator.ViewModels
             return "Китайський знак зодіаку: " + chineseZodiacSigns[index];
         }
 
-        private bool CalculateIsAdult(int age)
+        public bool CalculateIsAdult(int age)
         {
             if(age >= 18)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
-        private bool CalculateIsBirthday(DateTime birthDate)
+        public bool CalculateIsBirthday(DateTime birthDate)
         {
             if(birthDate.Month == DateTime.Today.Month && birthDate.Day == DateTime.Today.Day)
             {
@@ -162,29 +175,17 @@ namespace BirthdayCalculator.ViewModels
             return false;
         }
 
-        public string IsAdultString
-        {
-            get { return IsAdult ? "Менше 18" : "Повнолітній"; }
-        }
-
-        public string IsBirthdayString
-        {
-            get { return IsBirthday ? "Сьогодні ваш день народження!" : "Сьогодні не ваш день народження."; }
-        }
-
         private bool CanExecute(object obj)
         {
-            return BirthDate != DateTime.MinValue;
+            return !string.IsNullOrEmpty(FirstName) &&
+                   !string.IsNullOrEmpty(LastName) &&
+                   !string.IsNullOrEmpty(Email) &&
+                   BirthDate != DateTime.MinValue;
         }
 
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            if (propertyName == nameof(IsAdult) || propertyName == nameof(IsBirthday))
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAdultString)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBirthdayString)));
-            }
         }
     }
 }

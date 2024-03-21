@@ -64,11 +64,12 @@ namespace BirthdayCalculator.Models
         public bool IsAdult
         {
             get { return _isAdult; }
+            set { _isAdult = value; }
         }
-
         public bool IsBirthday
         {
             get { return _isBirthday; }
+            set { _isBirthday = value; }
         }
 
         public Person(string firstName, string lastName, string email, DateTime birthDate)

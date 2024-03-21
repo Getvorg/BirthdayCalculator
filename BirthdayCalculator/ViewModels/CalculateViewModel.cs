@@ -4,6 +4,8 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace BirthdayCalculator.ViewModels
 {
@@ -105,14 +107,8 @@ namespace BirthdayCalculator.ViewModels
                 {
                     await Task.Delay(3000);
 
-                    Age = CalculateAge(BirthDate);
+                    Age = CalculateAge(BirthDate);                 
                     OnPropertyChanged(nameof(Age));
-
-                    if (Age < 0 || Age > 135)
-                    {
-                        MessageBox.Show("Некоректний вік");
-                        return;
-                    }
 
                     ZodiacSign = CalculateZodiacSign(BirthDate);
                     OnPropertyChanged(nameof(ZodiacSign));
@@ -122,6 +118,8 @@ namespace BirthdayCalculator.ViewModels
 
                     OnPropertyChanged(nameof(FirstName));
                     OnPropertyChanged(nameof(LastName));
+
+                    IsValidEmail(Email);
                     OnPropertyChanged(nameof(Email));
 
                     IsAdult = CalculateIsAdult(Age);
@@ -131,9 +129,17 @@ namespace BirthdayCalculator.ViewModels
                     OnPropertyChanged(nameof(IsBirthdayString));
                 });
             }
-            catch (Exception)
+            catch (FutureBirthDateException ex)
             {
-                MessageBox.Show("Помилка");
+                MessageBox.Show("Помилка: " + ex.Message);
+            }
+            catch (InvalidEmailException ex)
+            {
+                MessageBox.Show("Помилка: " + ex.Message);
+            }
+            catch (InvalidAgeException ex)
+            {
+                MessageBox.Show("Помилка: " + ex.Message);
             }
             finally
             {
@@ -141,14 +147,22 @@ namespace BirthdayCalculator.ViewModels
             }
         }
 
-
         public int CalculateAge(DateTime birthDate)
         {
             DateTime today = DateTime.Today;
             int age = today.Year - birthDate.Year;
             if (birthDate.Date > today.AddYears(-age)) age--;
+            if (age < 0)
+            {
+                throw new InvalidAgeException("Некоректний вік.");
+            }
+            else if (age > 135)
+            {
+                throw new FutureBirthDateException("Некоректний вік.");
+            }
             return age;
         }
+
 
         public string CalculateZodiacSign(DateTime birthDate)
         {
@@ -196,6 +210,19 @@ namespace BirthdayCalculator.ViewModels
                 return true;
             }
             return false;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            Match match = Regex.Match(email, pattern);
+
+            if (!match.Success)
+            {
+                throw new InvalidEmailException("Невірна адреса електронної пошти.");
+            }
+
+            return true;
         }
 
         private bool CanExecute(object obj)
